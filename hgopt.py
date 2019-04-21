@@ -1,13 +1,19 @@
 import numpy as np
 
+
 class PatternSearch:
     def __init__(self):
         pass
 
-    # f - target function
-    # x - np.array. first point
+    # minimize возвращает точку в котором функция принимает наименьшее значение
+    # f - целевая функция
+    # x - np.array. начальная точка
+    # h - шаг алгоритма
+    # d - коэффициент уменьшения шага
+    # m - ускоряющий множитель
+    # eps - точность поиска
     def minimize(self, f, x, h, d, m, eps=0.01, max_iterations=100):
-        x1 = x
+        x1 = x.astype("float")
         fx1 = f(x)
         for i in range(max_iterations):
             x2, h1 = self.search_elementwise(f, x1, h, d)
@@ -17,7 +23,7 @@ class PatternSearch:
             if h < eps:
                 return x1
 
-    # иследующий поиск
+    # search реализует иследующий поиск. Шаг прибавляется к вектору
     def search(self, f, x1, h, d):
         x2 = x1 + h
 
@@ -41,6 +47,7 @@ class PatternSearch:
                 else:
                     return x2, h
 
+    # search_elementwise иследующий поиск. Шаг прибавлсяется к каждому компоненту вектора
     def search_elementwise(self, f, x1, h, d):
         x2 = np.array(x1)
         for i in range(len(x1)):
@@ -54,6 +61,7 @@ class PatternSearch:
             return self.search_elementwise(f, x1, h, d)
         return x2, h
 
+    # pattern_search поиск по образцу
     def pattern_search(self, f, x1, x0, m):
         xp = x1 + m * (x1 - x0)
         try:
