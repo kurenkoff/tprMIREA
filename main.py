@@ -99,5 +99,10 @@ def test_func(x):
     return 1.2 * x[0] * x[0] - 2.4 * x[1] - 1.6
 
 
+def f(x):
+    return x[0] ** 2 + x[0] * x[1] + x[1] ** 2 - 6 * x[0] - 9 * x[1]
+
+
 s = Simplex(2, 0.25, 0.1)
-print(s.minimize(test_func, [-1, -1], max_iterations=5))
+print(s.minimize(f, [0, 0], max_iterations=1000))
+print(f([1.08056640625, 3.95654296875]))
