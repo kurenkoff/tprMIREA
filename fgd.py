@@ -44,7 +44,7 @@ class FGDescent:
 
 if __name__ == "__main__":
     a = FGDescent()
-    print(a.minimize(np.array([1, 1]), tf, dtf))
+    print(a.minimize(np.array([2, 1]), tf, dtf))
     
 
 

@@ -29,6 +29,7 @@ class Simplex:
         i = 1
         # Итерационный процесс
         while self.check_end(xc, table) and i <= max_iterations:
+            print("================================================================")
             im = self.max(table)
             new_x = self.iter(table, im, fnc)
             print("new_x = ", new_x)
@@ -37,6 +38,7 @@ class Simplex:
             xc = self.new_xc(table, fnc)
             print("table = ", table)
             i += 1
+            print("===============================================================\n\n")
         # возврат минимального значения
         return self.min(table)
 
@@ -104,5 +106,5 @@ def f(x):
 
 
 s = Simplex(2, 0.25, 0.1)
-print(s.minimize(f, [0, 0], max_iterations=1000))
-print(f([1.08056640625, 3.95654296875]))
+res = s.minimize(f, [0, 0], max_iterations=1000)
+print("fmin(x) = " + str(res))
