@@ -15,24 +15,29 @@ class FGDescent:
 
     def minimize(self, x, f, grad, eps=0.01):
         # одна итерация
+        k = 0
         while True:
             g = grad(x)
-            if self.get_module(x) > eps:
+            presision = self.get_module(g)
+            if presision > eps:
                 h = self.get_step(f, grad, x)
                 x = x - h * grad(x)
             else:
+                print(k)
                 return x
+            k += 1
 
     def get_step(self, f, grad, x):
         hes = self.get_hessian(f, grad, x)
         g = grad(x)
         gt = grad(x).T
-        tmp = g * hes * gt
-        tmph = tmp[0][0]
-        tmp = g * g.T
+        tmp = np.dot(np.dot(g, hes), gt)
+        tmph = tmp
+        tmp = np.dot(g, g.T)
         return tmp / tmph
 
     def get_hessian(self, f, grad, x):
+        # исправить
         return np.array([[2, 1], [1, 2]])
 
     def get_module(self, x):
@@ -44,7 +49,9 @@ class FGDescent:
 
 if __name__ == "__main__":
     a = FGDescent()
-    print(a.minimize(np.array([1, 1]), tf, dtf))
+    x = a.minimize(np.array([1, 1]), tf, dtf)
+    print(x)
+    print(tf(x))
     
 
 
